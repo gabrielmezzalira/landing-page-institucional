@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=Space+Grotesk:wght@500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; background: #0A0A0A; }
+    a { color: #39D353; text-decoration: none; }
+    a:hover { color: #62e37c; }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+    @keyframes float1 { 0%,100% { transform: translateY(0) rotate(-1deg); } 50% { transform: translateY(-12px) rotate(0.5deg); } }
+    @keyframes float2 { 0%,100% { transform: translateY(-6px) rotate(1deg); } 50% { transform: translateY(8px) rotate(-0.5deg); } }
+    @keyframes float3 { 0%,100% { transform: translateY(4px) rotate(-0.5deg); } 50% { transform: translateY(-10px) rotate(1deg); } }
+    @keyframes float4 { 0%,100% { transform: translateY(-4px) rotate(0.5deg); } 50% { transform: translateY(10px) rotate(-1deg); } }
+    ::selection { background: #39D353; color: #0A0A0A; }
+  </style>
+</helmet>
+
+<div style="background:#0A0A0A; font-family:'Inter',sans-serif; color:#F5F5F5; overflow-x:hidden; width:100%; position:relative;">
+
+  <div style="position:absolute; top:0; left:0; right:0; height:520px; background:radial-gradient(closest-side, rgba(57,211,83,0.22), rgba(20,40,25,0.08) 60%, transparent 80%); pointer-events:none; z-index:0;"></div>
+
+  <!-- NAV -->
+  
+
+  <!-- SECTION 1: QUEM É O CITI (HERO) -->
+  <div style="display:flex; align-items:center; justify-content:space-between; padding:24px clamp(20px,5vw,72px); max-width:1400px; margin:0 auto; position:relative; z-index:1;">
+    <div style="display:flex; align-items:center; gap:10px;">
+      <img src="assets/citi-wordmark.png" alt="citi" style="height: 39px; width: 75px">
+      
+      
+    </div>
+    <a href="#contato" style="background:#39D353; color:#0A0A0A; font-weight:700; font-size:14px; padding:10px 22px; border-radius:999px; display:inline-block;" style-hover="background:#62e37c;">Falar com o time</a>
+  </div><section data-screen-label="01 - Hero / Quem somos" style="max-width:1400px; margin:0 auto; padding:clamp(24px,6vw,56px) clamp(20px,5vw,72px) clamp(48px,8vw,96px); display:grid; grid-template-columns: 1.1fr 1fr; gap:56px; align-items:center; position:relative; z-index:1;">
+    <div>
+      <div style="display:inline-flex; align-items:center; gap:8px; background:rgba(57,211,83,0.1); border:1px solid rgba(57,211,83,0.3); color:#39D353; font-size:13px; font-weight:700; padding:7px 16px; border-radius:999px; margin-bottom:24px;">
+        Consultoria júnior de tecnologia e IA
+      </div>
+      <h1 style="font-size:clamp(36px,4.6vw,58px); font-weight:900; line-height:1.05; letter-spacing:-0.03em; margin:0 0 24px; text-wrap:pretty;">
+        Diagnóstico e execução em tecnologia para <span style="background:linear-gradient(90deg,#39D353,#3EA5F0,#8B5CF6); -webkit-background-clip:text; background-clip:text; color:transparent;">{{ empresaName }}</span>
+      </h1>
+      <p style="font-size:18px; line-height:1.6; color:#B8BCC4; max-width:520px; margin:0 0 32px;">
+        Consultoria júnior de tecnologia e IA do CIn-UFPE, um dos maiores centros de computação e inteligência artificial da América Latina. Há 30 anos ajudamos empresas a diagnosticar problemas de negócio e implementar soluções tecnológicas com segurança, previsibilidade e retorno mensurável.
+      </p>
+      <div style="display:flex; gap:14px; flex-wrap:wrap;">
+        <a href="#contato" style="background:#39D353; color:#0A0A0A; font-weight:700; font-size:15px; padding:14px 28px; border-radius:999px; display:inline-block;" style-hover="background:#62e37c;">Agendar conversa</a>
+        <a href="#abordagem" style="background:transparent; border:1px solid rgba(255,255,255,0.18); color:#F5F5F5; font-weight:600; font-size:15px; padding:14px 28px; border-radius:999px; display:inline-block;" style-hover="border-color:rgba(255,255,255,0.4);">Ver como funciona</a>
+      </div>
+    </div>
+    <div style="position:relative;">
+      <div style="position:absolute; inset:-15% -20%; background:radial-gradient(closest-side, rgba(57,211,83,0.35), rgba(62,165,240,0.2) 55%, transparent 75%); filter:blur(10px); z-index:0;"></div>
+      <img src="assets/img2.png" alt="Time do CITi" style="position:relative; z-index:1; width:100%; height:auto; display:block; border-radius:20px; border:1px solid rgba(255,255,255,0.1); box-shadow:0 30px 80px rgba(0,0,0,0.5);">
+    </div>
+  </section>
+
+  <!-- SECTION 2: NOSSA ABORDAGEM -->
+  <section id="abordagem" data-screen-label="02 - Nossa abordagem" style="max-width:1200px; margin:0 auto; padding:clamp(32px,6vw,64px) clamp(20px,5vw,72px);">
+    <div style="color:#39D353; font-weight:700; font-size:14px; letter-spacing:0.04em; margin-bottom:12px;">NOSSA ABORDAGEM</div>
+    <h2 style="font-size:clamp(26px,3vw,38px); font-weight:800; letter-spacing:-0.02em; line-height:1.25; margin:0 0 48px; max-width:820px; border-left:4px solid #39D353; padding-left:20px;">
+      Diagnosticamos primeiro. Depois, escolhemos o melhor caminho.
+    </h2>
+
+    <div style="display:flex; flex-direction:column; gap:2px; align-items:stretch;">
+      <div style="background:#101410; border:1px solid rgba(255,255,255,0.08); border-top:3px solid #39D353; border-radius:16px; padding:28px 32px; display:flex; align-items:flex-start; justify-content:space-between; gap:24px;">
+        <div style="display:flex; align-items:flex-start; gap:16px;">
+          <span style="font-size:34px; font-weight:900; color:#39D353;">01</span>
+          <div>
+            <div style="font-size:20px; font-weight:700; color:#fff; margin-bottom:8px;">Discovery</div>
+            <div style="font-size:15px; line-height:1.6; color:#9CA3AF; max-width:640px;">Mapeamos o problema, quantificamos a ineficiência e desenhamos a solução com protótipo e business case.</div>
+          </div>
+        </div>
+        <div style="width:44px; height:44px; border-radius:12px; background:rgba(57,211,83,0.12); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#39D353" stroke-width="2"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.5.5.9 1.2 1 2.5h6c.1-1.3.5-2 1-2.5A6 6 0 0 0 12 3z"></path></svg>
+        </div>
+      </div>
+
+      <div style="height:20px; display:flex; justify-content:center;">
+        <div style="width:1px; background:rgba(255,255,255,0.15);"></div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+        <div style="background:#101410; border:1px solid rgba(255,255,255,0.08); border-top:3px solid #39D353; border-radius:16px; padding:28px 32px; display:flex; align-items:flex-start; justify-content:space-between; gap:20px;">
+          <div style="display:flex; align-items:flex-start; gap:16px;">
+            <span style="font-size:34px; font-weight:900; color:#39D353;">02</span>
+            <div>
+              <div style="font-size:20px; font-weight:700; color:#fff; margin-bottom:8px;">Desenvolvimento</div>
+              <div style="font-size:15px; line-height:1.6; color:#9CA3AF;">Design centrado no usuário + desenvolvimento ágil. Do protótipo aprovado ao produto funcional.</div>
+            </div>
+          </div>
+          <div style="width:44px; height:44px; border-radius:12px; background:rgba(57,211,83,0.12); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#39D353" stroke-width="2"><path d="M8 9l-4 4 4 4M16 9l4 4-4 4M13 5l-3 16"></path></svg>
+          </div>
+        </div>
+        <div style="background:#101410; border:1px solid rgba(255,255,255,0.08); border-top:3px solid #39D353; border-radius:16px; padding:28px 32px; display:flex; align-items:flex-start; justify-content:space-between; gap:20px;">
+          <div style="display:flex; align-items:flex-start; gap:16px;">
+            <span style="font-size:34px; font-weight:900; color:#39D353;">03</span>
+            <div>
+              <div style="font-size:20px; font-weight:700; color:#fff; margin-bottom:8px;">Dados + IA</div>
+              <div style="font-size:15px; line-height:1.6; color:#9CA3AF;">Estruturação de dados, dashboards, análises preditivas e IA aplicada ao negócio.</div>
+            </div>
+          </div>
+          <div style="width:44px; height:44px; border-radius:12px; background:rgba(57,211,83,0.12); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#39D353" stroke-width="2"><path d="M4 19V5M4 19h16M8 15v-4M12 15V7M16 15v-7"></path></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: CITI EM NUMEROS -->
+  <section data-screen-label="03 - Citi em números" style="max-width:1200px; margin:0 auto; padding:clamp(32px,6vw,72px) clamp(20px,5vw,72px); position:relative;">
+    <div style="position:absolute; top:10%; left:10%; width:280px; height:280px; background:radial-gradient(closest-side, rgba(57,211,83,0.16), transparent 70%); filter:blur(20px); z-index:0;"></div>
+    <div style="position:absolute; bottom:0; right:8%; width:320px; height:320px; background:radial-gradient(closest-side, rgba(139,92,246,0.14), transparent 70%); filter:blur(20px); z-index:0;"></div>
+    <h2 style="position:relative; font-family:'Space Grotesk',sans-serif; font-size:clamp(28px,3.4vw,42px); font-weight:700; letter-spacing:-0.02em; margin:0 0 56px; text-align:center;">O CITi em números</h2>
+    <div style="position:relative; display:grid; grid-template-columns:repeat(4,1fr); gap:24px;">
+      <div style="animation:float1 7s ease-in-out infinite; background:rgba(255,255,255,0.03); backdrop-filter:blur(14px); border:1px solid rgba(255,255,255,0.09); border-radius:24px; padding:32px 22px; text-align:center; box-shadow:0 20px 45px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.06); transition:transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease; cursor:default;" style-hover="transform:translateY(-10px) scale(1.04); border-color:rgba(57,211,83,0.55); box-shadow:0 25px 60px rgba(57,211,83,0.18), inset 0 1px 0 rgba(255,255,255,0.1);">
+        <div style="font-family:'Neue Haas Grotesk Display Pro','Inter',sans-serif; font-weight:800; font-size:clamp(40px,4.2vw,56px); font-weight:700; letter-spacing:-0.03em; background:linear-gradient(160deg,#fff,#9CA3AF); -webkit-background-clip:text; background-clip:text; color:transparent;">+30</div>
+        <div style="font-size:14px; color:#9CA3AF; margin-top:10px; line-height:1.4;"><strong style="color:#F5F5F5; font-weight:600;">anos</strong> de mercado</div>
+      </div>
+      <div style="animation:float2 7.5s ease-in-out infinite; background:rgba(255,255,255,0.03); backdrop-filter:blur(14px); border:1px solid rgba(57,211,83,0.25); border-radius:24px; padding:32px 22px; text-align:center; box-shadow:0 20px 45px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.06); transition:transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease; cursor:default;" style-hover="transform:translateY(-10px) scale(1.04); border-color:rgba(57,211,83,0.55); box-shadow:0 25px 60px rgba(57,211,83,0.18), inset 0 1px 0 rgba(255,255,255,0.1);">
+        <div style="font-family:'Neue Haas Grotesk Display Pro','Inter',sans-serif; font-weight:800; font-size:clamp(40px,4.2vw,56px); font-weight:700; letter-spacing:-0.03em; background:linear-gradient(160deg,#fff,#9CA3AF); -webkit-background-clip:text; background-clip:text; color:transparent;">1ª</div>
+        <div style="font-size:14px; color:#9CA3AF; margin-top:10px; line-height:1.4;">e maior <strong style="color:#F5F5F5; font-weight:600;">EJ de tecnologia</strong> do Brasil</div>
+      </div>
+      <div style="animation:float3 8s ease-in-out infinite; background:rgba(255,255,255,0.03); backdrop-filter:blur(14px); border:1px solid rgba(255,255,255,0.09); border-radius:24px; padding:32px 22px; text-align:center; box-shadow:0 20px 45px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.06); transition:transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease; cursor:default;" style-hover="transform:translateY(-10px) scale(1.04); border-color:rgba(57,211,83,0.55); box-shadow:0 25px 60px rgba(57,211,83,0.18), inset 0 1px 0 rgba(255,255,255,0.1);">
+        <div style="font-family:'Neue Haas Grotesk Display Pro','Inter',sans-serif; font-weight:800; font-size:clamp(40px,4.2vw,56px); font-weight:700; letter-spacing:-0.03em; background:linear-gradient(160deg,#fff,#9CA3AF); -webkit-background-clip:text; background-clip:text; color:transparent;">72</div>
+        <div style="font-size:14px; color:#9CA3AF; margin-top:10px; line-height:1.4;"><strong style="color:#F5F5F5; font-weight:600;">membros</strong> multidisciplinares</div>
+      </div>
+      <div style="animation:float4 7.2s ease-in-out infinite; background:rgba(255,255,255,0.03); backdrop-filter:blur(14px); border:1px solid rgba(57,211,83,0.25); border-radius:24px; padding:32px 22px; text-align:center; box-shadow:0 20px 45px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.06); transition:transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease; cursor:default;" style-hover="transform:translateY(-10px) scale(1.04); border-color:rgba(57,211,83,0.55); box-shadow:0 25px 60px rgba(57,211,83,0.18), inset 0 1px 0 rgba(255,255,255,0.1);">
+        <div style="font-family:'Neue Haas Grotesk Display Pro','Inter',sans-serif; font-weight:800; font-size:clamp(40px,4.2vw,56px); font-weight:700; letter-spacing:-0.03em; background:linear-gradient(160deg,#fff,#9CA3AF); -webkit-background-clip:text; background-clip:text; color:transparent;">+90</div>
+        <div style="font-size:14px; color:#9CA3AF; margin-top:10px; line-height:1.4;">de <strong style="color:#F5F5F5; font-weight:600;">NPS</strong> em 2025</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: CARROSSEL DE LOGOS -->
+  <section data-screen-label="04 - Carrossel alumni e parceiros" style="padding:clamp(32px,6vw,64px) 0 clamp(56px,8vw,96px);">
+    <div style="max-width:1200px; margin:0 auto; padding:0 clamp(20px,5vw,72px) 40px; text-align:center;">
+      
+      
+    <h2 style="font-size: clamp(24px,2.8vw,34px); font-weight: 800; letter-spacing: -0.02em; margin: 0 0 12px;">Quem confia no CITi</h2></div>
+
+    <div style="display:flex; width:max-content; animation:marquee 46s linear infinite; align-items:center;">
+        <img src="assets/clientes-final.png" style="height:220px; width:auto; margin-right:48px; border-radius:12px;" alt="Empresas que confiaram no CITi">
+        <img src="assets/alumni-final.png" style="height:220px; width:auto; margin-right:48px; border-radius:12px;" alt="Onde estão nossos alumni">
+        <img src="assets/parceiros-final.png" style="height:220px; width:auto; margin-right:48px; border-radius:12px;" alt="Nossos parceiros">
+        <img src="assets/clientes-final.png" style="height:220px; width:auto; margin-right:48px; border-radius:12px;" alt="Empresas que confiaram no CITi">
+        <img src="assets/alumni-final.png" style="height:220px; width:auto; margin-right:48px; border-radius:12px;" alt="Onde estão nossos alumni">
+        <img src="assets/parceiros-final.png" style="height:220px; width:auto; margin-right:48px; border-radius:12px;" alt="Nossos parceiros">
+      </div><div style="position:relative; margin-bottom:28px;">
+      <div style="position:absolute; left:0; top:0; bottom:0; width:120px; background:linear-gradient(90deg,#0A0A0A,transparent); z-index:2;"></div>
+      <div style="position:absolute; right:0; top:0; bottom:0; width:120px; background:linear-gradient(270deg,#0A0A0A,transparent); z-index:2;"></div>
+      
+    </div>
+
+    <div id="contato" style="max-width:1200px; margin:32px auto 0; padding:0 clamp(20px,5vw,72px); display:flex; justify-content:center;">
+      <a href="mailto:contato@citiufpe.com.br" style="background:#39D353; color:#0A0A0A; font-weight:700; font-size:15px; padding:14px 32px; border-radius:999px; display:inline-block;" style-hover="background:#62e37c;">Quero conversar com o CITi</a>
+    </div>
+  </section>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    const params = new URLSearchParams(window.location.search);
+    const empresa = params.get('empresa');
+    return {
+      empresaName: empresa && empresa.trim() ? empresa : 'sua empresa'
+    };
+  }
+}
+
+</script>
+</body>
+</html>
