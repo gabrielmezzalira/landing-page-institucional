@@ -25,6 +25,16 @@
     @keyframes float3 { 0%,100% { transform: translateY(4px) rotate(-0.5deg); } 50% { transform: translateY(-10px) rotate(1deg); } }
     @keyframes float4 { 0%,100% { transform: translateY(-4px) rotate(0.5deg); } 50% { transform: translateY(10px) rotate(-1deg); } }
     ::selection { background: #39D353; color: #0A0A0A; }
+    @media (max-width: 768px) {
+      .hero-grid { grid-template-columns: 1fr !important; gap: 32px !important; padding-bottom: 48px !important; }
+      .hero-image { display: none !important; }
+      .hero-buttons { flex-direction: column !important; }
+      .hero-buttons a { text-align: center !important; }
+      .abordagem-grid { grid-template-columns: 1fr !important; }
+      .numeros-grid { grid-template-columns: repeat(2,1fr) !important; }
+      .marquee-img { height: 130px !important; margin-right: 20px !important; }
+      .nav-bar { padding: 20px !important; }
+    }
   </style>
 </helmet>
 
@@ -36,14 +46,14 @@
   
 
   <!-- SECTION 1: QUEM É O CITI (HERO) -->
-  <div style="display:flex; align-items:center; justify-content:space-between; padding:24px clamp(20px,5vw,72px); max-width:1400px; margin:0 auto; position:relative; z-index:1;">
+  <div class="nav-bar" style="display:flex; align-items:center; justify-content:space-between; padding:24px clamp(20px,5vw,72px); max-width:1400px; margin:0 auto; position:relative; z-index:1;">
     <div style="display:flex; align-items:center; gap:10px;">
       <img src="assets/citi-wordmark.png" alt="citi" style="height: 39px; width: 75px">
       
       
     </div>
     <a href="https://www.instagram.com/citiufpe/" target="_blank" rel="noopener noreferrer" style="background:#39D353; color:#0A0A0A; font-weight:700; font-size:14px; padding:10px 22px; border-radius:999px; display:inline-block;" style-hover="background:#62e37c;">Falar com o time</a>
-  </div><section data-screen-label="01 - Hero / Quem somos" style="max-width:1400px; margin:0 auto; padding:clamp(24px,6vw,56px) clamp(20px,5vw,72px) clamp(48px,8vw,96px); display:grid; grid-template-columns: 1.1fr 1fr; gap:56px; align-items:center; position:relative; z-index:1;">
+  </div><section data-screen-label="01 - Hero / Quem somos" class="hero-grid" style="max-width:1400px; margin:0 auto; padding:clamp(24px,6vw,56px) clamp(20px,5vw,72px) clamp(48px,8vw,96px); display:grid; grid-template-columns: 1.1fr 1fr; gap:56px; align-items:center; position:relative; z-index:1;">
     <div>
       <div style="display:inline-flex; align-items:center; gap:8px; background:rgba(57,211,83,0.1); border:1px solid rgba(57,211,83,0.3); color:#39D353; font-size:13px; font-weight:700; padding:7px 16px; border-radius:999px; margin-bottom:24px;">
         Consultoria júnior de tecnologia e IA
@@ -54,12 +64,12 @@
       <p style="font-size:18px; line-height:1.6; color:#B8BCC4; max-width:520px; margin:0 0 32px;">
         Consultoria júnior de tecnologia e IA do CIn-UFPE, um dos maiores centros de computação e inteligência artificial da América Latina. Há 30 anos ajudamos empresas a diagnosticar problemas de negócio e implementar soluções tecnológicas com segurança, previsibilidade e retorno mensurável.
       </p>
-      <div style="display:flex; gap:14px; flex-wrap:wrap;">
+      <div class="hero-buttons" style="display:flex; gap:14px; flex-wrap:wrap;">
         <a href="https://www.instagram.com/citiufpe/" target="_blank" rel="noopener noreferrer" style="background:#39D353; color:#0A0A0A; font-weight:700; font-size:15px; padding:14px 28px; border-radius:999px; display:inline-block;" style-hover="background:#62e37c;">Agendar conversa</a>
         <a href="#abordagem" style="background:transparent; border:1px solid rgba(255,255,255,0.18); color:#F5F5F5; font-weight:600; font-size:15px; padding:14px 28px; border-radius:999px; display:inline-block;" style-hover="border-color:rgba(255,255,255,0.4);">Ver como funciona</a>
       </div>
     </div>
-    <div style="position:relative;">
+    <div class="hero-image" style="position:relative;">
       <div style="position:absolute; inset:-15% -20%; background:radial-gradient(closest-side, rgba(57,211,83,0.35), rgba(62,165,240,0.2) 55%, transparent 75%); filter:blur(10px); z-index:0;"></div>
       <img src="assets/img2.png" alt="Time do CITi" style="position:relative; z-index:1; width:100%; height:auto; display:block; border-radius:20px; border:1px solid rgba(255,255,255,0.1); box-shadow:0 30px 80px rgba(0,0,0,0.5);">
     </div>
@@ -90,7 +100,7 @@
         <div style="width:1px; background:rgba(255,255,255,0.15);"></div>
       </div>
 
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+      <div class="abordagem-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
         <div style="background:#101410; border:1px solid rgba(255,255,255,0.08); border-top:3px solid #39D353; border-radius:16px; padding:28px 32px; display:flex; align-items:flex-start; justify-content:space-between; gap:20px;">
           <div style="display:flex; align-items:flex-start; gap:16px;">
             <span style="font-size:34px; font-weight:900; color:#39D353;">02</span>
@@ -124,7 +134,7 @@
     <div style="position:absolute; top:10%; left:10%; width:280px; height:280px; background:radial-gradient(closest-side, rgba(57,211,83,0.16), transparent 70%); filter:blur(20px); z-index:0;"></div>
     <div style="position:absolute; bottom:0; right:8%; width:320px; height:320px; background:radial-gradient(closest-side, rgba(139,92,246,0.14), transparent 70%); filter:blur(20px); z-index:0;"></div>
     <h2 style="position:relative; font-family:'Space Grotesk',sans-serif; font-size:clamp(28px,3.4vw,42px); font-weight:700; letter-spacing:-0.02em; margin:0 0 56px; text-align:center;">O CITi em números</h2>
-    <div style="position:relative; display:grid; grid-template-columns:repeat(4,1fr); gap:24px;">
+    <div class="numeros-grid" style="position:relative; display:grid; grid-template-columns:repeat(4,1fr); gap:24px;">
       <div style="animation:float1 7s ease-in-out infinite; background:rgba(255,255,255,0.03); backdrop-filter:blur(14px); border:1px solid rgba(255,255,255,0.09); border-radius:24px; padding:32px 22px; text-align:center; box-shadow:0 20px 45px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.06); transition:transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease; cursor:default;" style-hover="transform:translateY(-10px) scale(1.04); border-color:rgba(57,211,83,0.55); box-shadow:0 25px 60px rgba(57,211,83,0.18), inset 0 1px 0 rgba(255,255,255,0.1);">
         <div style="font-family:'Neue Haas Grotesk Display Pro','Inter',sans-serif; font-weight:800; font-size:clamp(40px,4.2vw,56px); font-weight:700; letter-spacing:-0.03em; background:linear-gradient(160deg,#fff,#9CA3AF); -webkit-background-clip:text; background-clip:text; color:transparent;">+30</div>
         <div style="font-size:14px; color:#9CA3AF; margin-top:10px; line-height:1.4;"><strong style="color:#F5F5F5; font-weight:600;">anos</strong> de mercado</div>
@@ -152,12 +162,12 @@
     <h2 style="font-size: clamp(24px,2.8vw,34px); font-weight: 800; letter-spacing: -0.02em; margin: 0 0 12px;">Quem confia no CITi</h2></div>
 
     <div style="display:flex; width:max-content; animation:marquee 25s linear infinite; align-items:center;">
-        <img src="assets/clientes-final.png" style="height:220px; width:auto; margin-right:48px; border-radius:12px;" alt="Empresas que confiaram no CITi">
-        <img src="assets/alumni-final.png" style="height:220px; width:auto; margin-right:48px; border-radius:12px;" alt="Onde estão nossos alumni">
-        <img src="assets/parceiros-final.png" style="height:220px; width:auto; margin-right:48px; border-radius:12px;" alt="Nossos parceiros">
-        <img src="assets/clientes-final.png" style="height:220px; width:auto; margin-right:48px; border-radius:12px;" alt="Empresas que confiaram no CITi">
-        <img src="assets/alumni-final.png" style="height:220px; width:auto; margin-right:48px; border-radius:12px;" alt="Onde estão nossos alumni">
-        <img src="assets/parceiros-final.png" style="height:220px; width:auto; margin-right:48px; border-radius:12px;" alt="Nossos parceiros">
+        <img src="assets/clientes-final.png" class="marquee-img" style="height:220px; width:auto; margin-right:48px; border-radius:12px;" alt="Empresas que confiaram no CITi">
+        <img src="assets/alumni-final.png" class="marquee-img" style="height:220px; width:auto; margin-right:48px; border-radius:12px;" alt="Onde estão nossos alumni">
+        <img src="assets/parceiros-final.png" class="marquee-img" style="height:220px; width:auto; margin-right:48px; border-radius:12px;" alt="Nossos parceiros">
+        <img src="assets/clientes-final.png" class="marquee-img" style="height:220px; width:auto; margin-right:48px; border-radius:12px;" alt="Empresas que confiaram no CITi">
+        <img src="assets/alumni-final.png" class="marquee-img" style="height:220px; width:auto; margin-right:48px; border-radius:12px;" alt="Onde estão nossos alumni">
+        <img src="assets/parceiros-final.png" class="marquee-img" style="height:220px; width:auto; margin-right:48px; border-radius:12px;" alt="Nossos parceiros">
       </div><div style="position:relative; margin-bottom:28px;">
       <div style="position:absolute; left:0; top:0; bottom:0; width:120px; background:linear-gradient(90deg,#0A0A0A,transparent); z-index:2;"></div>
       <div style="position:absolute; right:0; top:0; bottom:0; width:120px; background:linear-gradient(270deg,#0A0A0A,transparent); z-index:2;"></div>
