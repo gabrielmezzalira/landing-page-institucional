@@ -25,6 +25,15 @@
     @keyframes float3 { 0%,100% { transform: translateY(4px) rotate(-0.5deg); } 50% { transform: translateY(-10px) rotate(1deg); } }
     @keyframes float4 { 0%,100% { transform: translateY(-4px) rotate(0.5deg); } 50% { transform: translateY(10px) rotate(-1deg); } }
     ::selection { background: #39D353; color: #0A0A0A; }
+    .slider-wrapper { position: relative; padding-bottom: 32px; }
+    input[type="range"] { width:100%; height:4px; background:rgba(255,255,255,0.12); border-radius:2px; outline:none; cursor:pointer; padding:0; border:none; box-shadow:none; accent-color:#39D353; }
+    input[type="range"]:focus { box-shadow:none; border-color:transparent; }
+    input[type="range"]::-webkit-slider-thumb { -webkit-appearance:none; width:20px; height:20px; border-radius:50%; background:#39D353; cursor:pointer; box-shadow:0 0 8px rgba(57,211,83,0.5); transition:box-shadow 0.2s; }
+    input[type="range"]::-webkit-slider-thumb:hover { box-shadow:0 0 14px rgba(57,211,83,0.7); }
+    input[type="range"]::-moz-range-thumb { width:20px; height:20px; border-radius:50%; background:#39D353; cursor:pointer; border:none; box-shadow:0 0 8px rgba(57,211,83,0.5); }
+    .slider-labels { display:flex; justify-content:space-between; margin-top:10px; }
+    .slider-labels span { font-size:11px; color:#555; text-align:center; flex:1; line-height:1.4; }
+    .slider-value { position:absolute; bottom:0; background:#39D353; color:#0A0A0A; font-size:12px; font-weight:700; padding:3px 10px; border-radius:20px; white-space:nowrap; pointer-events:none; transform:translateX(-50%); transition:left 0.1s; }
     @media (max-width: 768px) {
       .hero-grid { grid-template-columns: 1fr !important; gap: 32px !important; padding-bottom: 48px !important; }
       .hero-image { display: none !important; }
@@ -106,39 +115,56 @@
           </div>
           <div>
             <label style="display:block; font-size:12px; font-weight:700; color:#6B7280; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.06em;">Área de interesse *</label>
-            <select name="interesse" required style="width:100%; background:#101410; border:1px solid rgba(255,255,255,0.12); border-radius:12px; padding:14px 16px; color:#F5F5F5; font-size:15px; font-family:'Inter',sans-serif; outline:none; box-sizing:border-box; cursor:pointer; transition:border-color 0.2s;">
-              <option value="" disabled selected>Selecione...</option>
-              <option value="Discovery">Discovery / Consultoria</option>
-              <option value="Desenvolvimento">Desenvolvimento de Software</option>
-              <option value="Dados + IA">Dados &amp; Inteligência Artificial</option>
-              <option value="Outro">Outro</option>
+            <select name="interesse" required style="width:100%; background:#101410; border:1px solid rgba(255,255,255,0.12); border-radius:12px; padding:14px 16px; color:#F5F5F5; font-size:15px; font-family:'Inter',sans-serif; outline:none; box-sizing:border-box; cursor:pointer; transition:border-color 0.2s; background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E&quot;); background-repeat:no-repeat; background-position:right 14px center; padding-right:40px; appearance:none; -webkit-appearance:none;">
+              <option value="" disabled selected>Selecione uma opção</option>
+              <option>Quero criar um novo negócio</option>
+              <option>Quero evoluir meu produto</option>
+              <option>Quero validar uma ideia de negócio</option>
+              <option>Quero usar dados para tomar decisões</option>
+              <option>Quero implementar IA no meu negócio</option>
+              <option>Quero otimizar os processos da minha empresa</option>
+              <option>Quero desenvolver um sistema web</option>
+              <option>Quero desenvolver um aplicativo</option>
+              <option>Prefiro escrever o que preciso abaixo</option>
             </select>
           </div>
         </div>
 
         <div>
-          <label style="display:block; font-size:12px; font-weight:700; color:#6B7280; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.06em;">Faixa de investimento</label>
-          <select name="investimento" style="width:100%; background:#101410; border:1px solid rgba(255,255,255,0.12); border-radius:12px; padding:14px 16px; color:#F5F5F5; font-size:15px; font-family:'Inter',sans-serif; outline:none; box-sizing:border-box; cursor:pointer; transition:border-color 0.2s;">
-            <option value="" disabled selected>Selecione uma faixa...</option>
-            <option value="Até R$ 5.000">Até R$ 5.000</option>
-            <option value="R$ 5.000 – R$ 15.000">R$ 5.000 – R$ 15.000</option>
-            <option value="R$ 15.000 – R$ 30.000">R$ 15.000 – R$ 30.000</option>
-            <option value="Acima de R$ 30.000">Acima de R$ 30.000</option>
-            <option value="Não sei ainda">Não sei ainda</option>
-          </select>
+          <label style="display:block; font-size:12px; font-weight:700; color:#6B7280; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.06em;">Quanto você pretende investir?</label>
+          <div class="slider-wrapper">
+            <input type="range" id="citi-slider" name="investimento" min="0" max="5" step="1" value="2">
+            <div class="slider-labels">
+              <span>Até<br>5mil</span>
+              <span>5–10<br>mil</span>
+              <span>10–20<br>mil</span>
+              <span>20–50<br>mil</span>
+              <span>50–100<br>mil</span>
+              <span>+100<br>mil</span>
+            </div>
+            <div class="slider-value" id="citi-slider-value">10–20mil</div>
+          </div>
         </div>
 
         <div>
-          <label style="display:block; font-size:12px; font-weight:700; color:#6B7280; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.06em;">Conte sobre seu projeto *</label>
-          <textarea name="descricao" required rows="4" placeholder="Descreva o problema ou oportunidade que você quer endereçar..." style="width:100%; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.12); border-radius:12px; padding:14px 16px; color:#F5F5F5; font-size:15px; font-family:'Inter',sans-serif; outline:none; box-sizing:border-box; resize:vertical; min-height:120px; transition:border-color 0.2s, background 0.2s;"></textarea>
+          <label style="display:block; font-size:12px; font-weight:700; color:#6B7280; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.06em;">Descreva a sua ideia (:</label>
+          <textarea name="descricao" rows="4" placeholder="Conte um pouco sobre o que você tem em mente..." style="width:100%; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.12); border-radius:12px; padding:14px 16px; color:#F5F5F5; font-size:15px; font-family:'Inter',sans-serif; outline:none; box-sizing:border-box; resize:vertical; min-height:120px; transition:border-color 0.2s, background 0.2s;"></textarea>
         </div>
 
-        <div id="form-feedback" style="display:none; padding:14px 20px; border-radius:12px; font-size:14px; font-weight:600; line-height:1.5;"></div>
+        <p id="form-error" style="display:none; color:#EF4444; font-size:13px; text-align:center;">Por favor, preencha todos os campos obrigatórios.</p>
 
         <button type="submit" id="form-submit" style="background:#39D353; color:#0A0A0A; font-weight:700; font-size:15px; padding:16px 32px; border-radius:999px; border:none; cursor:pointer; font-family:'Inter',sans-serif; transition:background 0.2s, opacity 0.2s; width:fit-content; margin:0 auto;">
-          Enviar mensagem
+          Enviar ideia →
         </button>
       </form>
+
+      <div id="form-success" style="display:none; text-align:center; padding:40px 0;">
+        <div style="width:64px; height:64px; border-radius:50%; background:rgba(57,211,83,0.15); display:flex; align-items:center; justify-content:center; margin:0 auto 24px;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#39D353" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <h2 style="font-size:22px; font-weight:700; margin-bottom:10px;">Ideia recebida!</h2>
+        <p style="color:#9CA3AF; font-size:15px; line-height:1.6;">Obrigado pelo contato.<br>Entraremos em breve para agendar uma conversa.</p>
+      </div>
     </div>
   </section>
 
@@ -264,51 +290,71 @@ class Component extends DCLogic {
   componentDidMount() {
     const form = document.getElementById('citi-form');
     const submitBtn = document.getElementById('form-submit');
-    const feedback = document.getElementById('form-feedback');
+    const errorMsg = document.getElementById('form-error');
+    const successState = document.getElementById('form-success');
     if (!form) return;
 
-    form.querySelectorAll('input, textarea, select').forEach(el => {
+    const INVESTMENT_LABELS = ['Até 5mil','5–10mil','10–20mil','20–50mil','50–100mil','Acima de 100mil'];
+    const slider = document.getElementById('citi-slider');
+    const sliderValue = document.getElementById('citi-slider-value');
+
+    function updateSlider() {
+      const v = parseInt(slider.value);
+      sliderValue.textContent = INVESTMENT_LABELS[v];
+      const pct = (v / (slider.max - slider.min)) * 100;
+      sliderValue.style.left = `calc(${pct}% + ${10 - pct * 0.2}px)`;
+    }
+    slider.addEventListener('input', updateSlider);
+    updateSlider();
+
+    form.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], select, textarea').forEach(el => {
       el.addEventListener('focus', () => {
         el.style.borderColor = 'rgba(57,211,83,0.6)';
-        el.style.background = el.tagName === 'SELECT' ? '#0f1a10' : 'rgba(57,211,83,0.05)';
+        el.style.boxShadow = '0 0 0 3px rgba(57,211,83,0.12)';
       });
       el.addEventListener('blur', () => {
         el.style.borderColor = 'rgba(255,255,255,0.12)';
-        el.style.background = el.tagName === 'SELECT' ? '#101410' : 'rgba(255,255,255,0.05)';
+        el.style.boxShadow = 'none';
       });
     });
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
+      errorMsg.style.display = 'none';
+
       const data = {
         nome: form.nome.value.trim(),
         email: form.email.value.trim(),
         telefone: form.telefone.value.trim(),
         interesse: form.interesse.value,
-        investimento: form.investimento.value,
+        investimento: INVESTMENT_LABELS[parseInt(slider.value)],
         descricao: form.descricao.value.trim(),
       };
+
+      if (!data.nome || !data.email || !data.telefone || !data.interesse) {
+        errorMsg.style.display = 'block';
+        return;
+      }
+
       submitBtn.disabled = true;
       submitBtn.style.opacity = '0.6';
       submitBtn.textContent = 'Enviando...';
-      feedback.style.display = 'none';
+
       try {
-        const res = await fetch(APPS_SCRIPT_URL, { method: 'POST', body: JSON.stringify(data) });
-        const json = await res.json();
-        if (json.success) {
-          feedback.style.cssText = 'display:block; padding:14px 20px; border-radius:12px; font-size:14px; font-weight:600; line-height:1.5; background:rgba(57,211,83,0.1); border:1px solid rgba(57,211,83,0.3); color:#39D353;';
-          feedback.textContent = 'Mensagem enviada com sucesso! Entraremos em contato em breve.';
-          form.reset();
-        } else {
-          throw new Error();
-        }
+        await fetch(APPS_SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(data),
+        });
+        form.style.display = 'none';
+        successState.style.display = 'block';
       } catch {
-        feedback.style.cssText = 'display:block; padding:14px 20px; border-radius:12px; font-size:14px; font-weight:600; line-height:1.5; background:rgba(239,68,68,0.1); border:1px solid rgba(239,68,68,0.3); color:#EF4444;';
-        feedback.textContent = 'Erro ao enviar. Tente novamente ou fale conosco pelo Instagram.';
-      } finally {
+        errorMsg.textContent = 'Ocorreu um erro ao enviar. Tente novamente em instantes.';
+        errorMsg.style.display = 'block';
         submitBtn.disabled = false;
         submitBtn.style.opacity = '1';
-        submitBtn.textContent = 'Enviar mensagem';
+        submitBtn.textContent = 'Enviar ideia →';
       }
     });
   }
