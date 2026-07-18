@@ -304,9 +304,13 @@ class Component extends DCLogic {
     let sliderStep = 2;
     const TOTAL_STEPS = 5;
 
+    function stepToPct(step) {
+      return (step + 0.5) / (TOTAL_STEPS + 1) * 100;
+    }
+
     function setSliderStep(step) {
       sliderStep = Math.max(0, Math.min(TOTAL_STEPS, step));
-      const pct = (sliderStep / TOTAL_STEPS) * 100;
+      const pct = stepToPct(sliderStep);
       sliderFill.style.width = pct + '%';
       sliderThumb.style.left = pct + '%';
       sliderValueEl.style.left = pct + '%';
@@ -318,7 +322,7 @@ class Component extends DCLogic {
       const rect = sliderTrack.getBoundingClientRect();
       const clientX = e.touches ? e.touches[0].clientX : e.clientX;
       const ratio = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
-      return Math.round(ratio * TOTAL_STEPS);
+      return Math.round(ratio * (TOTAL_STEPS + 1) - 0.5);
     }
 
     let dragging = false;
