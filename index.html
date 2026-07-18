@@ -25,17 +25,14 @@
     @keyframes float3 { 0%,100% { transform: translateY(4px) rotate(-0.5deg); } 50% { transform: translateY(-10px) rotate(1deg); } }
     @keyframes float4 { 0%,100% { transform: translateY(-4px) rotate(0.5deg); } 50% { transform: translateY(10px) rotate(-1deg); } }
     ::selection { background: #39D353; color: #0A0A0A; }
-    .slider-wrapper { position: relative; padding-bottom: 32px; }
-    input[type="range"] { -webkit-appearance:none; appearance:none; width:100%; height:20px; background:transparent; outline:none; cursor:pointer; padding:0; border:none; box-shadow:none; }
-    input[type="range"]::-webkit-slider-runnable-track { height:4px; background:rgba(255,255,255,0.12); border-radius:2px; }
-    input[type="range"]::-moz-range-track { height:4px; background:rgba(255,255,255,0.12); border-radius:2px; }
-    input[type="range"]:focus { box-shadow:none; border-color:transparent; }
-    input[type="range"]::-webkit-slider-thumb { -webkit-appearance:none; width:20px; height:20px; border-radius:50%; background:#39D353; cursor:pointer; box-shadow:0 0 8px rgba(57,211,83,0.5); transition:box-shadow 0.2s; }
-    input[type="range"]::-webkit-slider-thumb:hover { box-shadow:0 0 14px rgba(57,211,83,0.7); }
-    input[type="range"]::-moz-range-thumb { width:20px; height:20px; border-radius:50%; background:#39D353; cursor:pointer; border:none; box-shadow:0 0 8px rgba(57,211,83,0.5); }
+    .slider-wrapper { position:relative; padding:12px 0 44px; cursor:pointer; user-select:none; }
+    .slider-track { position:relative; height:4px; background:rgba(255,255,255,0.12); border-radius:2px; }
+    .slider-fill { position:absolute; left:0; top:0; bottom:0; background:#39D353; border-radius:2px; pointer-events:none; }
+    .slider-thumb { position:absolute; top:50%; width:20px; height:20px; border-radius:50%; background:#39D353; transform:translate(-50%,-50%); box-shadow:0 0 8px rgba(57,211,83,0.5); transition:box-shadow 0.15s; pointer-events:none; }
+    .slider-thumb:hover { box-shadow:0 0 14px rgba(57,211,83,0.7); }
     .slider-labels { display:flex; justify-content:space-between; margin-top:10px; }
     .slider-labels span { font-size:11px; color:#555; text-align:center; flex:1; line-height:1.4; }
-    .slider-value { position:absolute; bottom:0; background:#39D353; color:#0A0A0A; font-size:12px; font-weight:700; padding:3px 10px; border-radius:20px; white-space:nowrap; pointer-events:none; transform:translateX(-50%); transition:left 0.1s; }
+    .slider-value { position:absolute; bottom:0; background:#39D353; color:#0A0A0A; font-size:12px; font-weight:700; padding:3px 10px; border-radius:20px; white-space:nowrap; pointer-events:none; transform:translateX(-50%); }
     @media (max-width: 768px) {
       .hero-grid { grid-template-columns: 1fr !important; gap: 32px !important; padding-bottom: 48px !important; }
       .hero-image { display: none !important; }
@@ -235,8 +232,12 @@
 
         <div>
           <label style="display:block; font-size:12px; font-weight:700; color:#6B7280; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.06em;">Quanto você pretende investir?</label>
-          <div class="slider-wrapper">
-            <input type="range" id="citi-slider" name="investimento" min="0" max="5" step="1" value="2">
+          <div class="slider-wrapper" id="citi-slider-wrapper">
+            <input type="hidden" id="citi-slider" name="investimento" value="2">
+            <div class="slider-track" id="citi-slider-track">
+              <div class="slider-fill" id="citi-slider-fill"></div>
+              <div class="slider-thumb" id="citi-slider-thumb"></div>
+            </div>
             <div class="slider-labels">
               <span>Até<br>5mil</span>
               <span>5–10<br>mil</span>
@@ -294,17 +295,40 @@ class Component extends DCLogic {
     if (!form) return;
 
     const INVESTMENT_LABELS = ['Até 5mil','5–10mil','10–20mil','20–50mil','50–100mil','Acima de 100mil'];
-    const slider = document.getElementById('citi-slider');
-    const sliderValue = document.getElementById('citi-slider-value');
+    const sliderHidden = document.getElementById('citi-slider');
+    const sliderWrapper = document.getElementById('citi-slider-wrapper');
+    const sliderTrack = document.getElementById('citi-slider-track');
+    const sliderFill = document.getElementById('citi-slider-fill');
+    const sliderThumb = document.getElementById('citi-slider-thumb');
+    const sliderValueEl = document.getElementById('citi-slider-value');
+    let sliderStep = 2;
+    const TOTAL_STEPS = 5;
 
-    function updateSlider() {
-      const v = parseInt(slider.value);
-      sliderValue.textContent = INVESTMENT_LABELS[v];
-      const pct = (v / (slider.max - slider.min)) * 100;
-      sliderValue.style.left = `calc(${pct}% + ${10 - pct * 0.2}px)`;
+    function setSliderStep(step) {
+      sliderStep = Math.max(0, Math.min(TOTAL_STEPS, step));
+      const pct = (sliderStep / TOTAL_STEPS) * 100;
+      sliderFill.style.width = pct + '%';
+      sliderThumb.style.left = pct + '%';
+      sliderValueEl.style.left = pct + '%';
+      sliderValueEl.textContent = INVESTMENT_LABELS[sliderStep];
+      sliderHidden.value = sliderStep;
     }
-    slider.addEventListener('input', updateSlider);
-    updateSlider();
+
+    function stepFromEvent(e) {
+      const rect = sliderTrack.getBoundingClientRect();
+      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+      const ratio = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+      return Math.round(ratio * TOTAL_STEPS);
+    }
+
+    let dragging = false;
+    sliderWrapper.addEventListener('mousedown', (e) => { dragging = true; setSliderStep(stepFromEvent(e)); });
+    document.addEventListener('mousemove', (e) => { if (dragging) setSliderStep(stepFromEvent(e)); });
+    document.addEventListener('mouseup', () => { dragging = false; });
+    sliderWrapper.addEventListener('touchstart', (e) => { dragging = true; setSliderStep(stepFromEvent(e)); }, { passive: true });
+    document.addEventListener('touchmove', (e) => { if (dragging) setSliderStep(stepFromEvent(e)); }, { passive: true });
+    document.addEventListener('touchend', () => { dragging = false; });
+    setSliderStep(2);
 
     form.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], select, textarea').forEach(el => {
       el.addEventListener('focus', () => {
@@ -326,7 +350,7 @@ class Component extends DCLogic {
         email: form.email.value.trim(),
         telefone: form.telefone.value.trim(),
         interesse: form.interesse.value,
-        investimento: INVESTMENT_LABELS[parseInt(slider.value)],
+        investimento: INVESTMENT_LABELS[sliderStep],
         descricao: form.descricao.value.trim(),
       };
 
