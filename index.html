@@ -26,7 +26,9 @@
     @keyframes float4 { 0%,100% { transform: translateY(-4px) rotate(0.5deg); } 50% { transform: translateY(10px) rotate(-1deg); } }
     ::selection { background: #39D353; color: #0A0A0A; }
     .slider-wrapper { position: relative; padding-bottom: 32px; }
-    input[type="range"] { width:100%; height:4px; background:rgba(255,255,255,0.12); border-radius:2px; outline:none; cursor:pointer; padding:0; border:none; box-shadow:none; accent-color:#39D353; }
+    input[type="range"] { -webkit-appearance:none; appearance:none; width:100%; height:20px; background:transparent; outline:none; cursor:pointer; padding:0; border:none; box-shadow:none; }
+    input[type="range"]::-webkit-slider-runnable-track { height:4px; background:rgba(255,255,255,0.12); border-radius:2px; }
+    input[type="range"]::-moz-range-track { height:4px; background:rgba(255,255,255,0.12); border-radius:2px; }
     input[type="range"]:focus { box-shadow:none; border-color:transparent; }
     input[type="range"]::-webkit-slider-thumb { -webkit-appearance:none; width:20px; height:20px; border-radius:50%; background:#39D353; cursor:pointer; box-shadow:0 0 8px rgba(57,211,83,0.5); transition:box-shadow 0.2s; }
     input[type="range"]::-webkit-slider-thumb:hover { box-shadow:0 0 14px rgba(57,211,83,0.7); }
@@ -82,89 +84,6 @@
     <div class="hero-image" style="position:relative;">
       <div style="position:absolute; inset:-15% -20%; background:radial-gradient(closest-side, rgba(57,211,83,0.35), rgba(62,165,240,0.2) 55%, transparent 75%); filter:blur(10px); z-index:0;"></div>
       <img src="assets/img2.png" alt="Time do CITi" style="position:relative; z-index:1; width:100%; height:auto; display:block; border-radius:20px; border:1px solid rgba(255,255,255,0.1); box-shadow:0 30px 80px rgba(0,0,0,0.5);">
-    </div>
-  </section>
-
-  <!-- SECTION 1.5: FORMULÁRIO -->
-  <section id="formulario" data-screen-label="01.5 - Formulário contato" style="max-width:900px; margin:0 auto; padding:clamp(0px,2vw,16px) clamp(20px,5vw,72px) clamp(32px,6vw,64px);">
-    <div style="background:rgba(255,255,255,0.03); border:1px solid #1f3a2a; border-radius:24px; padding:clamp(28px,4vw,56px); box-shadow:0 0 0 1px rgba(57,211,83,0.06), 0 0 40px rgba(57,211,83,0.10), 0 0 80px rgba(57,211,83,0.05), 0 24px 64px rgba(0,0,0,0.6);">
-      <div style="text-align:center; margin-bottom:40px;">
-        <div style="display:inline-flex; align-items:center; gap:8px; background:rgba(57,211,83,0.1); border:1px solid rgba(57,211,83,0.3); color:#39D353; font-size:13px; font-weight:700; padding:7px 16px; border-radius:999px; margin-bottom:20px;">
-          Vamos conversar?
-        </div>
-        <h2 style="font-size:clamp(22px,2.8vw,34px); font-weight:800; letter-spacing:-0.02em; margin:0 0 12px;">Nos conte sobre seu projeto</h2>
-        <p style="font-size:16px; color:#9CA3AF; margin:0; max-width:520px; margin-left:auto; margin-right:auto;">Preencha o formulário e entraremos em contato em até 24 horas.</p>
-      </div>
-
-      <form id="citi-form" style="display:grid; gap:20px;">
-        <div class="form-row-2" style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
-          <div>
-            <label style="display:block; font-size:12px; font-weight:700; color:#6B7280; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.06em;">Nome *</label>
-            <input type="text" name="nome" required placeholder="Seu nome completo" style="width:100%; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.12); border-radius:12px; padding:14px 16px; color:#F5F5F5; font-size:15px; font-family:'Inter',sans-serif; outline:none; box-sizing:border-box; transition:border-color 0.2s, background 0.2s;">
-          </div>
-          <div>
-            <label style="display:block; font-size:12px; font-weight:700; color:#6B7280; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.06em;">E-mail *</label>
-            <input type="email" name="email" required placeholder="seu@email.com" style="width:100%; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.12); border-radius:12px; padding:14px 16px; color:#F5F5F5; font-size:15px; font-family:'Inter',sans-serif; outline:none; box-sizing:border-box; transition:border-color 0.2s, background 0.2s;">
-          </div>
-        </div>
-
-        <div class="form-row-2" style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
-          <div>
-            <label style="display:block; font-size:12px; font-weight:700; color:#6B7280; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.06em;">Telefone</label>
-            <input type="tel" name="telefone" placeholder="(81) 99999-9999" style="width:100%; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.12); border-radius:12px; padding:14px 16px; color:#F5F5F5; font-size:15px; font-family:'Inter',sans-serif; outline:none; box-sizing:border-box; transition:border-color 0.2s, background 0.2s;">
-          </div>
-          <div>
-            <label style="display:block; font-size:12px; font-weight:700; color:#6B7280; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.06em;">Área de interesse *</label>
-            <select name="interesse" required style="width:100%; background:#101410; border:1px solid rgba(255,255,255,0.12); border-radius:12px; padding:14px 16px; color:#F5F5F5; font-size:15px; font-family:'Inter',sans-serif; outline:none; box-sizing:border-box; cursor:pointer; transition:border-color 0.2s; background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E&quot;); background-repeat:no-repeat; background-position:right 14px center; padding-right:40px; appearance:none; -webkit-appearance:none;">
-              <option value="" disabled selected>Selecione uma opção</option>
-              <option>Quero criar um novo negócio</option>
-              <option>Quero evoluir meu produto</option>
-              <option>Quero validar uma ideia de negócio</option>
-              <option>Quero usar dados para tomar decisões</option>
-              <option>Quero implementar IA no meu negócio</option>
-              <option>Quero otimizar os processos da minha empresa</option>
-              <option>Quero desenvolver um sistema web</option>
-              <option>Quero desenvolver um aplicativo</option>
-              <option>Prefiro escrever o que preciso abaixo</option>
-            </select>
-          </div>
-        </div>
-
-        <div>
-          <label style="display:block; font-size:12px; font-weight:700; color:#6B7280; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.06em;">Quanto você pretende investir?</label>
-          <div class="slider-wrapper">
-            <input type="range" id="citi-slider" name="investimento" min="0" max="5" step="1" value="2">
-            <div class="slider-labels">
-              <span>Até<br>5mil</span>
-              <span>5–10<br>mil</span>
-              <span>10–20<br>mil</span>
-              <span>20–50<br>mil</span>
-              <span>50–100<br>mil</span>
-              <span>+100<br>mil</span>
-            </div>
-            <div class="slider-value" id="citi-slider-value">10–20mil</div>
-          </div>
-        </div>
-
-        <div>
-          <label style="display:block; font-size:12px; font-weight:700; color:#6B7280; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.06em;">Descreva a sua ideia (:</label>
-          <textarea name="descricao" rows="4" placeholder="Conte um pouco sobre o que você tem em mente..." style="width:100%; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.12); border-radius:12px; padding:14px 16px; color:#F5F5F5; font-size:15px; font-family:'Inter',sans-serif; outline:none; box-sizing:border-box; resize:vertical; min-height:120px; transition:border-color 0.2s, background 0.2s;"></textarea>
-        </div>
-
-        <p id="form-error" style="display:none; color:#EF4444; font-size:13px; text-align:center;">Por favor, preencha todos os campos obrigatórios.</p>
-
-        <button type="submit" id="form-submit" style="background:#39D353; color:#0A0A0A; font-weight:700; font-size:15px; padding:16px 32px; border-radius:999px; border:none; cursor:pointer; font-family:'Inter',sans-serif; transition:background 0.2s, opacity 0.2s; width:fit-content; margin:0 auto;">
-          Enviar ideia →
-        </button>
-      </form>
-
-      <div id="form-success" style="display:none; text-align:center; padding:40px 0;">
-        <div style="width:64px; height:64px; border-radius:50%; background:rgba(57,211,83,0.15); display:flex; align-items:center; justify-content:center; margin:0 auto 24px;">
-          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#39D353" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-        </div>
-        <h2 style="font-size:22px; font-weight:700; margin-bottom:10px;">Ideia recebida!</h2>
-        <p style="color:#9CA3AF; font-size:15px; line-height:1.6;">Obrigado pelo contato.<br>Entraremos em breve para agendar uma conversa.</p>
-      </div>
     </div>
   </section>
 
@@ -267,8 +186,88 @@
       
     </div>
 
-    <div id="contato" style="max-width:1200px; margin:32px auto 0; padding:0 clamp(20px,5vw,72px); display:flex; justify-content:center;">
-      <a href="https://www.instagram.com/citiufpe/" target="_blank" rel="noopener noreferrer" style="background:#39D353; color:#0A0A0A; font-weight:700; font-size:15px; padding:14px 32px; border-radius:999px; display:inline-block;" style-hover="background:#62e37c;">Quero conversar com o CITi</a>
+  </section>
+
+  <!-- SECTION 5: FORMULÁRIO -->
+  <section id="formulario" data-screen-label="05 - Formulário contato" style="max-width:900px; margin:0 auto; padding:clamp(32px,6vw,64px) clamp(20px,5vw,72px) clamp(48px,8vw,96px);">
+    <div style="background:rgba(255,255,255,0.03); border:1px solid #1f3a2a; border-radius:24px; padding:clamp(28px,4vw,56px); box-shadow:0 0 0 1px rgba(57,211,83,0.06), 0 0 40px rgba(57,211,83,0.10), 0 0 80px rgba(57,211,83,0.05), 0 24px 64px rgba(0,0,0,0.6);">
+      <div style="text-align:center; margin-bottom:40px;">
+        <div style="display:inline-flex; align-items:center; gap:8px; background:rgba(57,211,83,0.1); border:1px solid rgba(57,211,83,0.3); color:#39D353; font-size:13px; font-weight:700; padding:7px 16px; border-radius:999px; margin-bottom:20px;">
+          Vamos conversar?
+        </div>
+        <h2 style="font-size:clamp(22px,2.8vw,34px); font-weight:800; letter-spacing:-0.02em; margin:0 0 12px;">Nos conte sobre seu projeto</h2>
+        <p style="font-size:16px; color:#9CA3AF; margin:0; max-width:520px; margin-left:auto; margin-right:auto;">Preencha o formulário e entraremos em contato em até 24 horas.</p>
+      </div>
+
+      <form id="citi-form" style="display:grid; gap:20px;">
+        <div class="form-row-2" style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+          <div>
+            <label style="display:block; font-size:12px; font-weight:700; color:#6B7280; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.06em;">Nome *</label>
+            <input type="text" name="nome" required placeholder="Seu nome completo" style="width:100%; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.12); border-radius:12px; padding:14px 16px; color:#F5F5F5; font-size:15px; font-family:'Inter',sans-serif; outline:none; box-sizing:border-box; transition:border-color 0.2s, background 0.2s;">
+          </div>
+          <div>
+            <label style="display:block; font-size:12px; font-weight:700; color:#6B7280; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.06em;">E-mail *</label>
+            <input type="email" name="email" required placeholder="seu@email.com" style="width:100%; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.12); border-radius:12px; padding:14px 16px; color:#F5F5F5; font-size:15px; font-family:'Inter',sans-serif; outline:none; box-sizing:border-box; transition:border-color 0.2s, background 0.2s;">
+          </div>
+        </div>
+
+        <div class="form-row-2" style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+          <div>
+            <label style="display:block; font-size:12px; font-weight:700; color:#6B7280; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.06em;">Telefone</label>
+            <input type="tel" name="telefone" placeholder="(81) 99999-9999" style="width:100%; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.12); border-radius:12px; padding:14px 16px; color:#F5F5F5; font-size:15px; font-family:'Inter',sans-serif; outline:none; box-sizing:border-box; transition:border-color 0.2s, background 0.2s;">
+          </div>
+          <div>
+            <label style="display:block; font-size:12px; font-weight:700; color:#6B7280; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.06em;">Área de interesse *</label>
+            <select name="interesse" required style="width:100%; background:#101410; border:1px solid rgba(255,255,255,0.12); border-radius:12px; padding:14px 16px; color:#F5F5F5; font-size:15px; font-family:'Inter',sans-serif; outline:none; box-sizing:border-box; cursor:pointer; transition:border-color 0.2s; background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E&quot;); background-repeat:no-repeat; background-position:right 14px center; padding-right:40px; appearance:none; -webkit-appearance:none;">
+              <option value="" disabled selected>Selecione uma opção</option>
+              <option>Quero criar um novo negócio</option>
+              <option>Quero evoluir meu produto</option>
+              <option>Quero validar uma ideia de negócio</option>
+              <option>Quero usar dados para tomar decisões</option>
+              <option>Quero implementar IA no meu negócio</option>
+              <option>Quero otimizar os processos da minha empresa</option>
+              <option>Quero desenvolver um sistema web</option>
+              <option>Quero desenvolver um aplicativo</option>
+              <option>Prefiro escrever o que preciso abaixo</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label style="display:block; font-size:12px; font-weight:700; color:#6B7280; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.06em;">Quanto você pretende investir?</label>
+          <div class="slider-wrapper">
+            <input type="range" id="citi-slider" name="investimento" min="0" max="5" step="1" value="2">
+            <div class="slider-labels">
+              <span>Até<br>5mil</span>
+              <span>5–10<br>mil</span>
+              <span>10–20<br>mil</span>
+              <span>20–50<br>mil</span>
+              <span>50–100<br>mil</span>
+              <span>+100<br>mil</span>
+            </div>
+            <div class="slider-value" id="citi-slider-value">10–20mil</div>
+          </div>
+        </div>
+
+        <div>
+          <label style="display:block; font-size:12px; font-weight:700; color:#6B7280; margin-bottom:8px; text-transform:uppercase; letter-spacing:0.06em;">Descreva a sua ideia (:</label>
+          <textarea name="descricao" rows="4" placeholder="Conte um pouco sobre o que você tem em mente..." style="width:100%; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.12); border-radius:12px; padding:14px 16px; color:#F5F5F5; font-size:15px; font-family:'Inter',sans-serif; outline:none; box-sizing:border-box; resize:vertical; min-height:120px; transition:border-color 0.2s, background 0.2s;"></textarea>
+        </div>
+
+        <p id="form-error" style="display:none; color:#EF4444; font-size:13px; text-align:center;">Por favor, preencha todos os campos obrigatórios.</p>
+
+        <button type="submit" id="form-submit" style="background:#39D353; color:#0A0A0A; font-weight:700; font-size:15px; padding:16px 32px; border-radius:999px; border:none; cursor:pointer; font-family:'Inter',sans-serif; transition:background 0.2s, opacity 0.2s; width:fit-content; margin:0 auto;">
+          Enviar ideia →
+        </button>
+      </form>
+
+      <div id="form-success" style="display:none; text-align:center; padding:40px 0;">
+        <div style="width:64px; height:64px; border-radius:50%; background:rgba(57,211,83,0.15); display:flex; align-items:center; justify-content:center; margin:0 auto 24px;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#39D353" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <h2 style="font-size:22px; font-weight:700; margin-bottom:10px;">Ideia recebida!</h2>
+        <p style="color:#9CA3AF; font-size:15px; line-height:1.6;">Obrigado pelo contato.<br>Entraremos em breve para agendar uma conversa.</p>
+      </div>
     </div>
   </section>
 
