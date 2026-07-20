@@ -403,11 +403,15 @@ class Component extends DCLogic {
     if (pingEnviado) return;
     pingEnviado = true;
     var url = TRACKER_URL + '?action=' + action + '&em=' + encodeURIComponent(em);
-    // keepalive garante entrega mesmo durante o unload da página
-    try {
-      fetch(url, { method: 'GET', mode: 'no-cors', keepalive: true });
-    } catch (e) {
-      new Image().src = url;
+    // sendBeacon é o único método garantido ao fechar aba no mobile
+    if (navigator.sendBeacon) {
+      navigator.sendBeacon(url);
+    } else {
+      try {
+        fetch(url, { method: 'GET', mode: 'no-cors', keepalive: true });
+      } catch (e) {
+        new Image().src = url;
+      }
     }
   }
 
