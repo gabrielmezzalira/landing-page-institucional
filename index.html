@@ -417,9 +417,13 @@ class Component extends DCLogic {
     ping('interacao');
   }
 
-  // Dispara bounce quando a pessoa sai da página sem interagir
+  // Dispara bounce quando a pessoa sai ou minimiza sem interagir
+  // pagehide → desktop; visibilitychange → iOS Safari e Android
   window.addEventListener('pagehide', function () {
     if (!interagiu) ping('bounce');
+  });
+  document.addEventListener('visibilitychange', function () {
+    if (document.visibilityState === 'hidden' && !interagiu) ping('bounce');
   });
 
   document.addEventListener('click', function (e) {
