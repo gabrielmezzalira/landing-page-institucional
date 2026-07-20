@@ -388,5 +388,45 @@ class Component extends DCLogic {
 }
 
 </script>
+<script>
+(function () {
+  var TRACKER_URL  = 'https://script.google.com/macros/s/AKfycbxZ75Vd597lr8GN9fZ2_8YURG1STrkeeqhue0jb2A53V_u38MZgTlHVCBdcKhHu4NXvUg/exec';
+  var BOUNCE_DELAY = 60000;
+
+  var params = new URLSearchParams(window.location.search);
+  var em = params.get('em');
+  if (!em) return;
+
+  var interagiu   = false;
+  var pingEnviado = false;
+  var timer       = null;
+
+  function ping(action) {
+    if (pingEnviado) return;
+    pingEnviado = true;
+    clearTimeout(timer);
+    new Image().src = TRACKER_URL + '?action=' + action + '&em=' + encodeURIComponent(em);
+  }
+
+  function onInteracao() {
+    if (interagiu) return;
+    interagiu = true;
+    ping('interacao');
+  }
+
+  timer = setTimeout(function () {
+    if (!interagiu) ping('bounce');
+  }, BOUNCE_DELAY);
+
+  document.addEventListener('click', function (e) {
+    var el = e.target && e.target.closest ? e.target.closest('a, button, [type="submit"]') : null;
+    if (el) onInteracao();
+  }, true);
+
+  document.addEventListener('submit', function () {
+    onInteracao();
+  }, true);
+})();
+</script>
 </body>
 </html>
