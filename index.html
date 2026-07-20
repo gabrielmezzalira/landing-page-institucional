@@ -390,8 +390,7 @@ class Component extends DCLogic {
 </script>
 <script>
 (function () {
-  var TRACKER_URL  = 'https://script.google.com/macros/s/AKfycbxZ75Vd597lr8GN9fZ2_8YURG1STrkeeqhue0jb2A53V_u38MZgTlHVCBdcKhHu4NXvUg/exec';
-  var BOUNCE_DELAY = 60000;
+  var TRACKER_URL = 'https://script.google.com/macros/s/AKfycbxZ75Vd597lr8GN9fZ2_8YURG1STrkeeqhue0jb2A53V_u38MZgTlHVCBdcKhHu4NXvUg/exec';
 
   var params = new URLSearchParams(window.location.search);
   var em = params.get('em');
@@ -399,13 +398,17 @@ class Component extends DCLogic {
 
   var interagiu   = false;
   var pingEnviado = false;
-  var timer       = null;
 
   function ping(action) {
     if (pingEnviado) return;
     pingEnviado = true;
-    clearTimeout(timer);
-    new Image().src = TRACKER_URL + '?action=' + action + '&em=' + encodeURIComponent(em);
+    var url = TRACKER_URL + '?action=' + action + '&em=' + encodeURIComponent(em);
+    // keepalive garante entrega mesmo durante o unload da página
+    try {
+      fetch(url, { method: 'GET', mode: 'no-cors', keepalive: true });
+    } catch (e) {
+      new Image().src = url;
+    }
   }
 
   function onInteracao() {
@@ -414,9 +417,10 @@ class Component extends DCLogic {
     ping('interacao');
   }
 
-  timer = setTimeout(function () {
+  // Dispara bounce quando a pessoa sai da página sem interagir
+  window.addEventListener('pagehide', function () {
     if (!interagiu) ping('bounce');
-  }, BOUNCE_DELAY);
+  });
 
   document.addEventListener('click', function (e) {
     var el = e.target && e.target.closest ? e.target.closest('a, button, [type="submit"]') : null;
