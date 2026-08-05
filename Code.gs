@@ -3,51 +3,53 @@
  * Google Apps Script — recebe os dados do formulário e grava na planilha.
  *
  * COMO FAZER O DEPLOY:
- * 1. Acesse script.google.com e crie um novo projeto.
- * 2. Cole este código no editor.
- * 3. Clique em "Implantar" → "Nova implantação".
- * 4. Tipo: "Aplicativo da Web".
- * 5. Executar como: "Eu (minha conta Google)".
- * 6. Quem tem acesso: "Qualquer pessoa" (Anyone).
- * 7. Clique em "Implantar" e copie a URL gerada.
- * 8. Cole a URL no arquivo index.html onde está APPS_SCRIPT_URL.
+ * 1. Acesse script.google.com e abra este projeto (ou crie um novo e cole este código).
+ * 2. Vá em Configurações do projeto (ícone de engrenagem) → Propriedades do script.
+ *    Adicione a propriedade:
+ *       SPREADSHEET_ID → 1bblTx9wfJfOyKOzll_6JKLajjtENOgtPB2EKv37NRZA
+ *       (o ID que aparece no URL da planilha resposta-email-marketing)
+ * 3. Clique em "Implantar" → "Gerenciar implantações" → editar (lápis) →
+ *    "Versão: nova versão" → Implantar.
+ * 4. A URL do web app (APPS_SCRIPT_URL no index.html) NÃO muda.
  *
- * CABEÇALHOS DA PLANILHA (linha 1):
- * Timestamp | Nome | Empresa | E-mail | WhatsApp | Desafio | Origem
+ * CABEÇALHOS DA PLANILHA (linha 1, criados automaticamente se vazia):
+ * Timestamp | Nome | E-mail | Telefone | Interesse | Investimento | Descrição
  */
+
+var HEADERS = [
+  'Timestamp',
+  'Nome',
+  'E-mail',
+  'Telefone',
+  'Interesse',
+  'Investimento',
+  'Descrição',
+];
 
 function doPost(e) {
   try {
-    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    var sheet = getSheet();
 
-    // Cria cabeçalhos se a planilha estiver vazia
     if (sheet.getLastRow() === 0) {
-      sheet.appendRow([
-        'Timestamp',
-        'Nome',
-        'Empresa',
-        'E-mail',
-        'WhatsApp',
-        'Desafio',
-        'Origem',
-      ]);
+      sheet.appendRow(HEADERS);
     }
 
     // Aceita formulário URL-encoded e JSON.
     var data = e.parameter || {};
     if (e.postData && e.postData.contents &&
-        (e.postData.type === 'application/json' || e.postData.contents.trim().charAt(0) === '{')) {
+        (e.postData.type === 'application/json' ||
+         e.postData.contents.trim().charAt(0) === '{')) {
       data = JSON.parse(e.postData.contents);
     }
 
     sheet.appendRow([
       new Date().toLocaleString('pt-BR', { timeZone: 'America/Recife' }),
-      data.nome || '',
-      data.empresa || '',
-      data.email || '',
-      data.whatsapp || data.telefone || '',
-      data.desafio || data.interesse || '',
-      data.origem || 'Formulário CITi',
+      data.nome         || '',
+      data.email        || '',
+      data.telefone     || data.whatsapp || '',
+      data.interesse    || data.desafio  || '',
+      data.investimento || '',
+      data.descricao    || data.origem   || '',
     ]);
 
     return ContentService
@@ -61,9 +63,23 @@ function doPost(e) {
   }
 }
 
-// Permite testar via GET no browser (retorna status)
 function doGet() {
   return ContentService
     .createTextOutput(JSON.stringify({ status: 'CITi form script is running' }))
     .setMimeType(ContentService.MimeType.JSON);
+}
+
+// ─── Utilitários ──────────────────────────────────────────────────────────────
+
+function getSheet() {
+  var id = PropertiesService.getScriptProperties().getProperty('SPREADSHEET_ID');
+  if (id) {
+    return SpreadsheetApp.openById(id).getSheets()[0];
+  }
+  // Fallback: script está vinculado a uma planilha (container-bound)
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  if (!ss) {
+    throw new Error('Defina SPREADSHEET_ID em Propriedades do script.');
+  }
+  return ss.getActiveSheet();
 }

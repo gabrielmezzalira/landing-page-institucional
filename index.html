@@ -1682,7 +1682,7 @@ Do not render a placeholder in production. -->
     });
   }
 
-  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzz5TL-BFptb92vIQO8ffS6xmhQej_6Oyw1Vfdr8y2NBmtNMJHZycOZsRenlioGu5g/exec';
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxepgb7-WdmRjYDGwDwnzlYcYDz5dX7ZDKc5MRILM5SAo4vv9QYmqblVXZruUI0AJpQ/exec';
 
   form.addEventListener('submit', async event => {
     event.preventDefault();
@@ -1741,6 +1741,44 @@ Do not render a placeholder in production. -->
       }
     }
   });
+})();
+</script>
+
+<script>
+(function () {
+  var TRACKER_URL =
+'https://script.google.com/macros/s/AKfycbxZ75Vd597lr8GN9fZ2_8YURG1STrkeeqhue0jb2A53V_u38MZgTlHVCBdcKhHu4NXvUg/exec';
+
+  var params = new URLSearchParams(window.location.search);
+  var em = params.get('em');
+  if (!em) return;
+
+  var interagiu   = false;
+  var pingEnviado = false;
+
+  function ping(action) {
+    if (pingEnviado) return;
+    pingEnviado = true;
+    var url = TRACKER_URL + '?action=' + action + '&em=' + encodeURIComponent(em);
+    try {
+      fetch(url, { method: 'GET', mode: 'no-cors', keepalive: true });
+    } catch (e) {
+      new Image().src = url;
+    }
+  }
+
+  window.addEventListener('pagehide', function () {
+    if (!interagiu) ping('bounce');
+  });
+
+  document.addEventListener('click', function (e) {
+    var el = e.target && e.target.closest ? e.target.closest('a, button, [type="submit"]') : null;
+    if (el) { interagiu = true; ping('interacao'); }
+  }, true);
+
+  document.addEventListener('submit', function () {
+    interagiu = true; ping('interacao');
+  }, true);
 })();
 </script>
 
