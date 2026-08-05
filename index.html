@@ -1709,9 +1709,11 @@ Do not render a placeholder in production. -->
     }
 
     try {
-      await fetch(APPS_SCRIPT_URL, {
+      const response = await fetch(APPS_SCRIPT_URL, {
         method: 'POST',
-        mode: 'no-cors',
+        // text/plain mantém a requisição simples (sem preflight) e permite
+        // receber a resposta JSON do Google Apps Script.
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
         body: JSON.stringify({
           nome: data.get('nome'),
           empresa: data.get('empresa'),
@@ -1726,6 +1728,15 @@ Do not render a placeholder in production. -->
           descricao: 'Lead captado pelo case CITi × Neoenergia V15'
         })
       });
+
+      if (!response.ok) {
+        throw new Error(`O servidor respondeu com status ${response.status}.`);
+      }
+
+      const result = await response.json();
+      if (!result.success) {
+        throw new Error(result.error || 'O servidor não confirmou a gravação dos dados.');
+      }
 
       if (status) {
         status.classList.remove('is-sending');

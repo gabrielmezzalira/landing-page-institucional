@@ -13,12 +13,13 @@
  * 4. A URL do web app (APPS_SCRIPT_URL no index.html) NÃO muda.
  *
  * CABEÇALHOS DA PLANILHA (linha 1, criados automaticamente se vazia):
- * Timestamp | Nome | E-mail | Telefone | Interesse | Investimento | Descrição
+ * Timestamp | Nome | Empresa | E-mail | Telefone | Interesse | Investimento | Descrição
  */
 
 var HEADERS = [
   'Timestamp',
   'Nome',
+  'Empresa',
   'E-mail',
   'Telefone',
   'Interesse',
@@ -45,6 +46,7 @@ function doPost(e) {
     sheet.appendRow([
       new Date().toLocaleString('pt-BR', { timeZone: 'America/Recife' }),
       data.nome         || '',
+      data.empresa      || '',
       data.email        || '',
       data.telefone     || data.whatsapp || '',
       data.interesse    || data.desafio  || '',
@@ -72,9 +74,18 @@ function doGet() {
 // ─── Utilitários ──────────────────────────────────────────────────────────────
 
 function getSheet() {
-  var id = PropertiesService.getScriptProperties().getProperty('SPREADSHEET_ID');
+  var id = (PropertiesService.getScriptProperties().getProperty('SPREADSHEET_ID') || '').trim();
   if (id) {
-    return SpreadsheetApp.openById(id).getSheets()[0];
+    try {
+      return SpreadsheetApp.openById(id).getSheets()[0];
+    } catch (err) {
+      throw new Error(
+        'Não foi possível abrir a planilha configurada em SPREADSHEET_ID ' +
+        '(termina em ' + id.slice(-6) + '). Verifique se esta implantação do Web App ' +
+        'usa o projeto correto e se a conta que o executa possui acesso de editor. ' +
+        'Detalhe: ' + err.message
+      );
+    }
   }
   // Fallback: script está vinculado a uma planilha (container-bound)
   var ss = SpreadsheetApp.getActiveSpreadsheet();
@@ -82,4 +93,28 @@ function getSheet() {
     throw new Error('Defina SPREADSHEET_ID em Propriedades do script.');
   }
   return ss.getActiveSheet();
+}
+
+/**
+ * Execute esta função pelo editor do Apps Script para validar a configuração
+ * usando a mesma conta que autoriza o projeto. O resultado aparece em Executions.
+ */
+function diagnoseSpreadsheetConfiguration() {
+  var id = (PropertiesService.getScriptProperties().getProperty('SPREADSHEET_ID') || '').trim();
+  var result = {
+    propertyConfigured: Boolean(id),
+    spreadsheetIdSuffix: id ? id.slice(-6) : null,
+  };
+
+  try {
+    var sheet = getSheet();
+    result.status = 'ok';
+    result.sheetName = sheet.getName();
+  } catch (err) {
+    result.status = 'error';
+    result.error = err.message;
+  }
+
+  Logger.log(JSON.stringify(result));
+  return result;
 }
