@@ -13,7 +13,7 @@
  * 8. Cole a URL no arquivo index.html onde está APPS_SCRIPT_URL.
  *
  * CABEÇALHOS DA PLANILHA (linha 1):
- * Timestamp | Nome | E-mail | Telefone | Interesse | Investimento | Descrição
+ * Timestamp | Nome | Empresa | E-mail | WhatsApp | Desafio | Origem
  */
 
 function doPost(e) {
@@ -25,24 +25,29 @@ function doPost(e) {
       sheet.appendRow([
         'Timestamp',
         'Nome',
+        'Empresa',
         'E-mail',
-        'Telefone',
-        'Interesse',
-        'Investimento',
-        'Descrição',
+        'WhatsApp',
+        'Desafio',
+        'Origem',
       ]);
     }
 
-    var data = JSON.parse(e.postData.contents);
+    // Aceita formulário URL-encoded e JSON.
+    var data = e.parameter || {};
+    if (e.postData && e.postData.contents &&
+        (e.postData.type === 'application/json' || e.postData.contents.trim().charAt(0) === '{')) {
+      data = JSON.parse(e.postData.contents);
+    }
 
     sheet.appendRow([
       new Date().toLocaleString('pt-BR', { timeZone: 'America/Recife' }),
       data.nome || '',
+      data.empresa || '',
       data.email || '',
-      data.telefone || '',
-      data.interesse || '',
-      data.investimento || '',
-      data.descricao || '',
+      data.whatsapp || data.telefone || '',
+      data.desafio || data.interesse || '',
+      data.origem || 'Formulário CITi',
     ]);
 
     return ContentService
