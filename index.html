@@ -298,6 +298,7 @@ class Component extends DCLogic {
         });
         form.style.display = 'none';
         successState.style.display = 'block';
+        if (window.citiRegistrarConversao) window.citiRegistrarConversao();
       } catch {
         errorMsg.textContent = 'Ocorreu um erro ao enviar. Tente novamente em instantes.';
         errorMsg.style.display = 'block';
@@ -315,7 +316,8 @@ class Component extends DCLogic {
   var TRACKER_URL = '/api/ping';
 
   var params = new URLSearchParams(window.location.search);
-  var em = params.get('em');
+  var em    = params.get('em');
+  var fluxo = params.get('fluxo') || 'citi-geral';
   if (!em) return;
 
   var interagiu   = false;
@@ -324,7 +326,10 @@ class Component extends DCLogic {
   function ping(action) {
     if (pingEnviado) return;
     pingEnviado = true;
-    var url = TRACKER_URL + '?action=' + action + '&em=' + encodeURIComponent(em);
+    var url = TRACKER_URL
+      + '?action=' + action
+      + '&em=' + encodeURIComponent(em)
+      + '&fluxo=' + encodeURIComponent(fluxo);
     // sendBeacon é o único método garantido ao fechar aba no mobile
     if (navigator.sendBeacon) {
       navigator.sendBeacon(url);
@@ -337,13 +342,15 @@ class Component extends DCLogic {
     }
   }
 
-  function onInteracao() {
+  // Só conta como conversão real quando o formulário é enviado com sucesso —
+  // chamado por window.citiRegistrarConversao() no handler de submit do form.
+  function onConversao() {
     if (interagiu) return;
     interagiu = true;
     ping('interacao');
   }
 
-  // Dispara bounce quando a pessoa sai ou minimiza sem interagir
+  // Dispara o email de engajamento quando a pessoa sai/minimiza sem converter.
   // pagehide → desktop; visibilitychange → iOS Safari e Android
   window.addEventListener('pagehide', function () {
     if (!interagiu) ping('bounce');
@@ -352,14 +359,7 @@ class Component extends DCLogic {
     if (document.visibilityState === 'hidden' && !interagiu) ping('bounce');
   });
 
-  document.addEventListener('click', function (e) {
-    var el = e.target && e.target.closest ? e.target.closest('a, button, [type="submit"]') : null;
-    if (el) onInteracao();
-  }, true);
-
-  document.addEventListener('submit', function () {
-    onInteracao();
-  }, true);
+  window.citiRegistrarConversao = onConversao;
 })();
 </script>
 </body>

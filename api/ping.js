@@ -7,10 +7,10 @@ const GAS_URL =
   "https://script.google.com/macros/s/AKfycbxZ75Vd597lr8GN9fZ2_8YURG1STrkeeqhue0jb2A53V_u38MZgTlHVCBdcKhHu4NXvUg/exec";
 
 module.exports = async function handler(req, res) {
-  const { action = "", em = "" } = req.query;
+  const { action = "", em = "", fluxo = "" } = req.query;
 
   if (action && em) {
-    const url = `${GAS_URL}?action=${encodeURIComponent(action)}&em=${encodeURIComponent(em)}`;
+    const url = `${GAS_URL}?action=${encodeURIComponent(action)}&em=${encodeURIComponent(em)}&fluxo=${encodeURIComponent(fluxo)}`;
     try {
       const controller = new AbortController();
       const timeout = setTimeout(() => controller.abort(), 3500);
