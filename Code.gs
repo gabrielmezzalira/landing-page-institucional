@@ -8,9 +8,6 @@
  *    Adicione a propriedade:
  *       SPREADSHEET_ID → 1bblTx9wfJfOyKOzll_6JKLajjtENOgtPB2EKv37NRZA
  *       (o ID que aparece no URL da planilha resposta-email-marketing)
- *    Opcionalmente:
- *       NOTIFICAR_EMAIL → email que recebe aviso a cada nova resposta
- *       (padrão: gabriel.mezzalira@citi.org.br se a propriedade não for definida)
  * 3. Clique em "Implantar" → "Gerenciar implantações" → editar (lápis) →
  *    "Versão: nova versão" → Implantar.
  * 4. A URL do web app (APPS_SCRIPT_URL no index.html) NÃO muda.
@@ -29,8 +26,6 @@ var HEADERS = [
   'Investimento',
   'Descrição',
 ];
-
-var NOTIFICAR_EMAIL_PADRAO = 'gabriel.mezzalira@citi.org.br';
 
 function doPost(e) {
   try {
@@ -59,8 +54,6 @@ function doPost(e) {
       data.descricao    || data.origem   || '',
     ]);
 
-    notificarNovaResposta(data);
-
     return ContentService
       .createTextOutput(JSON.stringify({ success: true }))
       .setMimeType(ContentService.MimeType.JSON);
@@ -76,36 +69,6 @@ function doGet() {
   return ContentService
     .createTextOutput(JSON.stringify({ status: 'CITi form script is running' }))
     .setMimeType(ContentService.MimeType.JSON);
-}
-
-// ─── Notificação por email ──────────────────────────────────────────────────
-
-// Avisa por email sempre que uma nova resposta chega na planilha. Roda dentro
-// do doPost — se o envio falhar (cota do Gmail, etc.) não deve derrubar a
-// gravação na planilha, por isso o try/catch isolado aqui.
-function notificarNovaResposta(data) {
-  try {
-    var destino = (PropertiesService.getScriptProperties().getProperty('NOTIFICAR_EMAIL') || '').trim()
-      || NOTIFICAR_EMAIL_PADRAO;
-
-    var nome  = data.nome  || '(sem nome)';
-    var email = data.email || '(sem email)';
-
-    var corpo = ''
-      + 'Nova resposta no formulário "Nos conte sua ideia":\n\n'
-      + 'Nome: '         + (data.nome         || '') + '\n'
-      + 'Empresa: '      + (data.empresa      || '') + '\n'
-      + 'E-mail: '       + (data.email        || '') + '\n'
-      + 'Telefone: '     + (data.telefone || data.whatsapp || '') + '\n'
-      + 'Interesse: '    + (data.interesse || data.desafio || '') + '\n'
-      + 'Investimento: ' + (data.investimento || '') + '\n'
-      + 'Descrição: '    + (data.descricao || data.origem || '') + '\n\n'
-      + 'Planilha: ' + SpreadsheetApp.getActiveSpreadsheet().getUrl();
-
-    MailApp.sendEmail(destino, 'Nova resposta: ' + nome + ' (' + email + ')', corpo);
-  } catch (err) {
-    console.error('Falha ao notificar nova resposta: ' + err.message);
-  }
 }
 
 // ─── Utilitários ──────────────────────────────────────────────────────────────

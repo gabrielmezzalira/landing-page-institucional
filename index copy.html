@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nos conte sua ideia — CITi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0a;
+      --card: #161616;
+      --green: #00e676;
+      --green-dim: #00c853;
+      --text: #ffffff;
+      --muted: #888888;
+      --input-bg: #1e1e1e;
+      --input-border: #2e2e2e;
+      --input-focus: #00e676;
+      --radius: 10px;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      /* brilho verde ambiente no centro da página */
+      background-image:
+        radial-gradient(ellipse 80% 50% at 50% 0%, rgba(0, 230, 118, 0.10) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 40% at 50% 100%, rgba(0, 230, 118, 0.06) 0%, transparent 70%);
+    }
+
+    /* ── Header ── */
+    header {
+      padding: 24px 40px;
+      border-bottom: 1px solid #1a2e22;
+    }
+
+    header img {
+      height: 36px;
+      width: auto;
+      filter: drop-shadow(0 0 8px rgba(0, 230, 118, 0.3));
+    }
+
+    /* ── Main ── */
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 20px;
+    }
+
+    h1 {
+      font-size: clamp(28px, 5vw, 42px);
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      text-align: center;
+      margin-bottom: 8px;
+      text-shadow: 0 0 40px rgba(0, 230, 118, 0.25);
+    }
+
+    .subtitle {
+      color: var(--muted);
+      text-align: center;
+      font-size: 15px;
+      margin-bottom: 48px;
+    }
+
+    /* ── Card ── */
+    .card {
+      background: var(--card);
+      border: 1px solid #1f3a2a;
+      border-radius: 16px;
+      padding: 48px;
+      width: 100%;
+      max-width: 600px;
+      box-shadow:
+        0 0 0 1px rgba(0, 230, 118, 0.06),
+        0 0 40px rgba(0, 230, 118, 0.10),
+        0 0 80px rgba(0, 230, 118, 0.05),
+        0 24px 64px rgba(0, 0, 0, 0.6);
+    }
+
+    /* ── Field groups ── */
+    .field {
+      margin-bottom: 28px;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+      letter-spacing: 0.3px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    select,
+    textarea {
+      width: 100%;
+      background: var(--input-bg);
+      border: 1px solid var(--input-border);
+      border-radius: var(--radius);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      padding: 14px 16px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    input::placeholder, textarea::placeholder { color: #555; }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--input-focus);
+      box-shadow: 0 0 0 3px rgba(0, 230, 118, 0.12);
+    }
+
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 40px;
+      cursor: pointer;
+    }
+
+    select option { background: #1e1e1e; }
+
+    textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    /* ── Slider ── */
+    .slider-wrapper {
+      position: relative;
+      padding-bottom: 28px;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      height: 4px;
+      background: var(--input-border);
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+      padding: 0;
+      border: none;
+      box-shadow: none;
+      accent-color: var(--green);
+    }
+
+    input[type="range"]:focus {
+      box-shadow: none;
+      border-color: transparent;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--green);
+      cursor: pointer;
+      box-shadow: 0 0 8px rgba(0, 230, 118, 0.5);
+      transition: box-shadow 0.2s;
+    }
+
+    input[type="range"]::-webkit-slider-thumb:hover {
+      box-shadow: 0 0 14px rgba(0, 230, 118, 0.7);
+    }
+
+    input[type="range"]::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--green);
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 0 8px rgba(0, 230, 118, 0.5);
+    }
+
+    .slider-labels {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+    }
+
+    .slider-labels span {
+      font-size: 11px;
+      color: #555;
+      text-align: center;
+      flex: 1;
+    }
+
+    .slider-value {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--green);
+      color: #000;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+      white-space: nowrap;
+      transition: left 0.1s;
+      pointer-events: none;
+    }
+
+    /* ── Button ── */
+    .btn-submit {
+      width: 100%;
+      background: var(--green);
+      color: #000;
+      border: none;
+      border-radius: var(--radius);
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      padding: 16px;
+      cursor: pointer;
+      letter-spacing: 0.3px;
+      transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+      margin-top: 8px;
+      box-shadow: 0 0 18px rgba(0, 230, 118, 0.35), 0 4px 16px rgba(0, 0, 0, 0.4);
+    }
+
+    .btn-submit:hover {
+      background: #00ff8a;
+      box-shadow: 0 0 32px rgba(0, 230, 118, 0.6), 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .btn-submit:active { transform: scale(0.99); }
+
+    .btn-submit:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* ── Error ── */
+    .error-msg {
+      display: none;
+      color: #ff5252;
+      font-size: 13px;
+      margin-top: 12px;
+      text-align: center;
+    }
+
+    /* ── Success state ── */
+    .success {
+      display: none;
+      text-align: center;
+      padding: 40px 0;
+    }
+
+    .success-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: rgba(0, 230, 118, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+    }
+
+    .success-icon svg { color: var(--green); }
+
+    .success h2 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .success p {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      padding: 24px;
+      color: #444;
+      font-size: 12px;
+    }
+
+    @media (max-width: 600px) {
+      .card { padding: 32px 24px; }
+      header { padding: 20px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <img src="assets/citi-logo.png" alt="CITi" />
+  </header>
+
+  <main>
+    <h1>NOS CONTE SUA IDEIA!</h1>
+    <p class="subtitle">Consultoria júnior de tecnologia e IA do CIn-UFPE</p>
+
+    <div class="card">
+      <form id="ideaForm" novalidate>
+
+        <div class="field">
+          <label for="nome">Nome</label>
+          <input type="text" id="nome" name="nome" placeholder="Seu nome completo" required />
+        </div>
+
+        <div class="field">
+          <label for="email">E-mail</label>
+          <input type="email" id="email" name="email" placeholder="seu@email.com" required />
+        </div>
+
+        <div class="field">
+          <label for="telefone">Telefone</label>
+          <input type="tel" id="telefone" name="telefone" placeholder="(81) 99999-9999" required />
+        </div>
+
+        <div class="field">
+          <label for="interesse">Qual seu interesse?</label>
+          <select id="interesse" name="interesse" required>
+            <option value="" disabled selected>Selecione uma opção</option>
+            <option>Quero criar um novo negócio</option>
+            <option>Quero evoluir meu produto</option>
+            <option>Quero validar uma ideia de negócio</option>
+            <option>Quero usar dados para tomar decisões</option>
+            <option>Quero implementar IA no meu negócio</option>
+            <option>Quero otimizar os processos da minha empresa</option>
+            <option>Quero desenvolver um sistema web</option>
+            <option>Quero desenvolver um aplicativo</option>
+            <option>Prefiro escrever o que preciso abaixo</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="investimento">Quanto você pretende investir?</label>
+          <div class="slider-wrapper">
+            <input type="range" id="investimento" name="investimento"
+              min="0" max="5" step="1" value="2" />
+            <div class="slider-labels">
+              <span>Até<br>5mil</span>
+              <span>5–10<br>mil</span>
+              <span>10–20<br>mil</span>
+              <span>20–50<br>mil</span>
+              <span>50–100<br>mil</span>
+              <span>+100<br>mil</span>
+            </div>
+            <div class="slider-value" id="sliderValue">10–20mil</div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="descricao">Descreva a sua ideia (:</label>
+          <textarea id="descricao" name="descricao"
+            placeholder="Conte um pouco sobre o que você tem em mente..."></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit" id="submitBtn">
+          Enviar ideia →
+        </button>
+
+        <p class="error-msg" id="errorMsg">
+          Ocorreu um erro ao enviar. Tente novamente em instantes.
+        </p>
+
+      </form>
+
+      <div class="success" id="successState">
+        <div class="success-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12" />
+          </svg>
+        </div>
+        <h2>Ideia recebida!</h2>
+        <p>Obrigado pelo contato.<br>Entraremos em breve para agendar uma conversa.</p>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    © 2024 CITi — Centro de Informática e Tecnologia da Informação
+  </footer>
+
+  <script>
+    // Cole aqui a URL do seu Google Apps Script após o deploy
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxepgb7-WdmRjYDGwDwnzlYcYDz5dX7ZDKc5MRILM5SAo4vv9QYmqblVXZruUI0AJpQ/exec';
+
+    const INVESTMENT_LABELS = [
+      'Até 5mil',
+      '5–10mil',
+      '10–20mil',
+      '20–50mil',
+      '50–100mil',
+      'Acima de 100mil',
+    ];
+
+    const slider = document.getElementById('investimento');
+    const sliderValue = document.getElementById('sliderValue');
+
+    function updateSlider() {
+      const v = parseInt(slider.value);
+      sliderValue.textContent = INVESTMENT_LABELS[v];
+      const pct = (v / (slider.max - slider.min)) * 100;
+      sliderValue.style.left = `calc(${pct}% + ${(10 - pct * 0.2)}px)`;
+    }
+
+    slider.addEventListener('input', updateSlider);
+    updateSlider();
+
+    document.getElementById('ideaForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const btn = document.getElementById('submitBtn');
+      const errorMsg = document.getElementById('errorMsg');
+      errorMsg.style.display = 'none';
+
+      const data = {
+        nome: document.getElementById('nome').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        telefone: document.getElementById('telefone').value.trim(),
+        interesse: document.getElementById('interesse').value,
+        investimento: INVESTMENT_LABELS[parseInt(slider.value)],
+        descricao: document.getElementById('descricao').value.trim(),
+      };
+
+      if (!data.nome || !data.email || !data.telefone || !data.interesse) {
+        errorMsg.textContent = 'Por favor, preencha todos os campos obrigatórios.';
+        errorMsg.style.display = 'block';
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Enviando...';
+
+      try {
+        await fetch(APPS_SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(data),
+        });
+
+        document.getElementById('ideaForm').style.display = 'none';
+        document.getElementById('successState').style.display = 'block';
+      } catch (err) {
+        errorMsg.style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = 'Enviar ideia →';
+      }
+    });
+  </script>
+
+<script>
+(function () {
+  var TRACKER_URL =
+'https://script.google.com/macros/s/AKfycbxZ75Vd597lr8GN9fZ2_8YURG1STrkeeqhue0jb2A53V_u38MZgTlHVCBdcKhHu4NXvUg/exec';
+
+  var params = new URLSearchParams(window.location.search);
+  var em = params.get('em');
+  if (!em) return;
+
+  var interagiu   = false;
+  var pingEnviado = false;
+
+  function ping(action) {
+    if (pingEnviado) return;
+    pingEnviado = true;
+    var url = TRACKER_URL + '?action=' + action + '&em=' + encodeURIComponent(em);
+    try {
+      fetch(url, { method: 'GET', mode: 'no-cors', keepalive: true });
+    } catch (e) {
+      new Image().src = url;
+    }
+  }
+
+  window.addEventListener('pagehide', function () {
+    if (!interagiu) ping('bounce');
+  });
+
+  document.addEventListener('click', function (e) {
+    var el = e.target && e.target.closest ? e.target.closest('a, button, [type="submit"]') : null;
+    if (el) { interagiu = true; ping('interacao'); }
+  }, true);
+
+  document.addEventListener('submit', function () {
+    interagiu = true; ping('interacao');
+  }, true);
+})();
+</script>
+
+</body>
+</html>
